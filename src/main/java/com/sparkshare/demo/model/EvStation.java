@@ -2,11 +2,11 @@ package com.sparkshare.demo.model;
 
 import org.locationtech.jts.geom.Point;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sparkshare.demo.util.PointSerializer;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "stations")
@@ -27,7 +27,7 @@ public class EvStation {
 
     // Geospatial field for coordinates (latitude/longitude)
     @JsonSerialize(using = PointSerializer.class)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "geography(Point, 4326)")
     private Point location;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -43,8 +43,12 @@ public class EvStationController {
                       .orElseGet(() -> ResponseEntity.notFound().build());
     }
     @GetMapping("/all")
-    public ResponseEntity<List<EvStation>> getAllStations(){
-        List<EvStation> stations = evStationService.getAllStations();
+    public ResponseEntity<List<EvStation>> getAllStations(
+        @RequestParam double latitude,
+        @RequestParam double longitude,
+        @RequestParam double radius
+    ){
+        List<EvStation> stations = evStationService.getAllStations(latitude,longitude,radius);
         return ResponseEntity.ok(stations);
     }
 

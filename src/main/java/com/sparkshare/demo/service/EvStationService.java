@@ -38,8 +38,10 @@ public class EvStationService  {
     public Optional<EvStation> getStationById(Long id){
         return evStationRepository.findById(id);
     }
-    public List<EvStation> getAllStations(){
-        return evStationRepository.findAll();
+    public List<EvStation> getAllStations(double latitude, double longitude, double radius){
+        
+        Point location = geometryFactory.createPoint(new Coordinate(latitude, longitude));
+        return evStationRepository.findStationsWithinRadius(longitude,latitude,radius);
     }
 
 }
