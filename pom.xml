@@ -84,6 +84,20 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Hibernate Spatial for PostGIS support -->
+    <dependency>
+        <groupId>org.hibernate.orm</groupId>
+        <artifactId>hibernate-spatial</artifactId>
+		<version>6.5.3.Final</version>
+    </dependency>
+
+    <!-- PostGIS for geospatial queries -->
+    <dependency>
+    <groupId>org.locationtech.jts</groupId>
+    <artifactId>jts-core</artifactId>
+    <version>1.18.0</version>
+	</dependency>
+
 	</dependencies>
 
 	<build>
