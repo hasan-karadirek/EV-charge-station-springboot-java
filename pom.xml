@@ -30,6 +30,32 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
+	<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-api</artifactId>
+    <version>0.11.5</version>
+	</dependency>
+	<dependency>
+	    <groupId>io.jsonwebtoken</groupId>
+	    <artifactId>jjwt-impl</artifactId>
+	    <version>0.11.5</version>
+	    <scope>runtime</scope>
+	</dependency>
+	<dependency>
+	    <groupId>io.jsonwebtoken</groupId>
+	    <artifactId>jjwt-jackson</artifactId> <!-- Use jackson for JSON parsing -->
+	    <version>0.11.5</version>
+	    <scope>runtime</scope>
+	</dependency>
+
+    
+    <dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>4.0.1</version> <!-- Ensure this version matches the version your application requires -->
+	    <scope>provided</scope>
+	</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
