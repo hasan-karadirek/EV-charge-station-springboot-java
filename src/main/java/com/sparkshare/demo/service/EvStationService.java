@@ -4,6 +4,8 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.stereotype.Service;
 import com.sparkshare.demo.repository.EvStationRepository;
 import com.sparkshare.demo.model.EvStation;
+import com.sparkshare.demo.model.User;
+
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Point;
@@ -21,7 +23,7 @@ public class EvStationService  {
         this.geometryFactory = new GeometryFactory();
     }
 
-    public EvStation createStation(CreateStationRequest request){
+    public EvStation createStation(CreateStationRequest request, User user){
         Point location = geometryFactory.createPoint(new Coordinate(request.getLongitude(), request.getLatitude()));
         
         EvStation station = new EvStation();
@@ -29,6 +31,7 @@ public class EvStationService  {
         station.setLocation(location);
         station.setName(request.getName());
         station.setOwner(request.getOwner());
+        station.setUser(user);
 
         return evStationRepository.save(station);
     }

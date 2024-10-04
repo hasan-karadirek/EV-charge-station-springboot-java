@@ -3,6 +3,8 @@ package com.sparkshare.demo.model;
 import org.locationtech.jts.geom.Point;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sparkshare.demo.util.PointSerializer;
 
@@ -27,6 +29,19 @@ public class EvStation {
     @JsonSerialize(using = PointSerializer.class)
     @Column(nullable = false)
     private Point location;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
