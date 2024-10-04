@@ -8,6 +8,8 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Point;
 import com.sparkshare.demo.dto.CreateStationRequest;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EvStationService  {
@@ -29,6 +31,12 @@ public class EvStationService  {
         station.setOwner(request.getOwner());
 
         return evStationRepository.save(station);
+    }
+    public Optional<EvStation> getStationById(Long id){
+        return evStationRepository.findById(id);
+    }
+    public List<EvStation> getAllStations(){
+        return evStationRepository.findAll();
     }
 
 }
