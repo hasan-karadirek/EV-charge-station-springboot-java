@@ -35,4 +35,9 @@ public class BookingController {
         Optional<User> user = userService.getUserByUsername(username);
         return bookingService.createBooking(bookingRequest, user.get());
     }
+
+    @GetMapping("/{id}")
+    public Optional<Booking> getBookingById(@PathVariable Long id){
+        return bookingService.getBookingById(id);
+    }
 }

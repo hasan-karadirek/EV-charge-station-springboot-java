@@ -42,7 +42,12 @@ public class BookingService {
         newBooking.setUser(user);
 
         return bookingRepository.save(newBooking);
-
-
+    }
+    public Optional<Booking> getBookingById(Long id) throws EntityNotFoundException{
+        Optional<Booking> booking = bookingRepository.findById(id);
+        if (booking.isEmpty()){
+            throw new EntityNotFoundException("There is no such a Booking with this id: " + id);
+        }
+        return booking;
     }
 }
