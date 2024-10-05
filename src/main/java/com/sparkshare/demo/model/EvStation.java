@@ -1,5 +1,6 @@
 package com.sparkshare.demo.model;
 
+import java.util.List;
 import org.locationtech.jts.geom.Point;
 import jakarta.persistence.*;
 
@@ -31,8 +32,21 @@ public class EvStation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "user-station")
     private User user;
+
+    // OneToMany relationship with Booking (one station can have many bookings)
+    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference(value = "station-booking")
+    private List<Booking> bookings;
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
 
     public User getUser() {
         return user;
