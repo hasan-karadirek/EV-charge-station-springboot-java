@@ -1,6 +1,9 @@
 package com.sparkshare.demo.service;
 
+import java.util.List;
 import java.util.Optional;
+
+import javax.management.RuntimeErrorException;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,10 @@ public class BookingService {
     }
 
     public Booking createBooking(CreateBookingRequest bookingRequest, User user) throws EntityNotFoundException{
+        List<Booking> overlappingBookings = bookingRepository.findOverlappingBookings(bookingRequest.getStation_id(), bookingRequest.getCheckin(), bookingRequest.getCheckout());
+        if (overlappingBookings.size()>0){
+            throw new RuntimeException("Station is not available!");
+        }
         Optional<EvStation> station = stationRepository.findById(bookingRequest.getStation_id());
         if (station.isEmpty()) {
              throw new EntityNotFoundException("There is no such a station with this id: " + bookingRequest.getStation_id());
