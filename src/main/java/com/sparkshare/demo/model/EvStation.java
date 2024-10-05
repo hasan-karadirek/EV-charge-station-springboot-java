@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sparkshare.demo.util.PointSerializer;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "stations")

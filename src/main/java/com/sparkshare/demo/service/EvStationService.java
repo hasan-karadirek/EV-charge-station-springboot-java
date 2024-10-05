@@ -9,7 +9,6 @@ import com.sparkshare.demo.model.User;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Point;
 import com.sparkshare.demo.dto.CreateStationRequest;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
