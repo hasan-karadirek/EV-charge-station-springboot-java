@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -45,12 +44,12 @@ public class BookingService {
 
         return bookingRepository.save(newBooking);
     }
-    public Optional<Booking> getBookingById(Long id) throws EntityNotFoundException{
+    public Booking getBookingById(Long id) throws EntityNotFoundException{
         Optional<Booking> booking = bookingRepository.findById(id);
         if (booking.isEmpty()){
             throw new EntityNotFoundException("There is no such a Booking with this id: " + id);
         }
-        return booking;
+        return booking.get();
     }
     public Page<Booking> getBookingsForConsumer(Integer page, Integer size, User user){
         Integer pageFromZero = page -1;
