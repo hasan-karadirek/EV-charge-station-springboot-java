@@ -2,6 +2,7 @@ package com.sparkshare.demo.controller;
 
 import com.sparkshare.demo.dto.AuthRequest;
 import com.sparkshare.demo.dto.TokenResponse;
+import com.sparkshare.demo.dto.UserRegisterationRequest;
 import com.sparkshare.demo.model.User;
 import com.sparkshare.demo.repository.UserRepository;
 import com.sparkshare.demo.security.JwtUtil;
@@ -49,8 +50,12 @@ public class AuthController {
 
     // User Registration Endpoint
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    public User register(@RequestBody UserRegisterationRequest user) {
+        User newUser = new User();
+        newUser.setUsername(user.getUsername());
+        newUser.setEmail((user.getEmail()));
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        
+        return userRepository.save(newUser);
     }
 }
