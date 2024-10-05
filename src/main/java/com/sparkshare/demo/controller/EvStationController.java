@@ -5,6 +5,8 @@ import com.sparkshare.demo.model.User;
 import com.sparkshare.demo.service.EvStationService;
 import com.sparkshare.demo.service.UserService;
 
+import org.springframework.data.domain.Page;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.sparkshare.demo.dto.CreateStationRequest;
 import java.util.Optional;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
 import java.util.List;
 
 @RestController
@@ -43,12 +47,14 @@ public class EvStationController {
                       .orElseGet(() -> ResponseEntity.notFound().build());
     }
     @GetMapping("/all")
-    public ResponseEntity<List<EvStation>> getAllStations(
+    public ResponseEntity<Page<EvStation>> getAllStations(
         @RequestParam double latitude,
         @RequestParam double longitude,
-        @RequestParam double radius
+        @RequestParam double radius,
+        @RequestParam(defaultValue = "1") @Min(1) Integer page,
+        @RequestParam(defaultValue = "10") @Min(1) @Max(100) Integer size
     ){
-        List<EvStation> stations = evStationService.getAllStations(latitude,longitude,radius);
+        Page<EvStation> stations = evStationService.getAllStations(latitude,longitude,radius,page,size);
         return ResponseEntity.ok(stations);
     }
 

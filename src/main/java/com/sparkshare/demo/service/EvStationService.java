@@ -6,12 +6,15 @@ import com.sparkshare.demo.repository.EvStationRepository;
 import com.sparkshare.demo.model.EvStation;
 import com.sparkshare.demo.model.User;
 
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Point;
 import com.sparkshare.demo.dto.CreateStationRequest;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class EvStationService  {
@@ -38,10 +41,10 @@ public class EvStationService  {
     public Optional<EvStation> getStationById(Long id){
         return evStationRepository.findById(id);
     }
-    public List<EvStation> getAllStations(double latitude, double longitude, double radius){
-        
-        Point location = geometryFactory.createPoint(new Coordinate(latitude, longitude));
-        return evStationRepository.findStationsWithinRadius(longitude,latitude,radius);
+    public Page<EvStation> getAllStations(double latitude, double longitude, double radius, Integer page, Integer size){
+        Integer pageFromZero = page -1;
+        Pageable pageable = PageRequest.of(pageFromZero,size);
+        return evStationRepository.findStationsWithinRadius(longitude,latitude,radius,pageable);
     }
 
 }
