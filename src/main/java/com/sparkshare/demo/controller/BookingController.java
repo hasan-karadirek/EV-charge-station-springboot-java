@@ -33,24 +33,24 @@ public class BookingController {
     public ResponseEntity<Booking> createBooking(@RequestBody CreateBookingRequest bookingRequest){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        Optional<User> user = userService.getUserByUsername(username);
-        Booking newBooking = bookingService.createBooking(bookingRequest, user.get());
+        User user = userService.getUserByUsername(username);
+        Booking newBooking = bookingService.createBooking(bookingRequest, user);
         return ResponseEntity.ok(newBooking);
     }
     @GetMapping("/station")
     public ResponseEntity<Page<Booking>> getBookingsForStation(@RequestParam(defaultValue = "1") @Min(1) Integer page, @RequestParam(defaultValue = "10") @Min(1) @Max(100) Integer size){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        Optional<User> user = userService.getUserByUsername(username);
-        Page<Booking> bookings = bookingService.getBookingsForStation(page,size,user.get());
+        User user = userService.getUserByUsername(username);
+        Page<Booking> bookings = bookingService.getBookingsForStation(page,size,user);
         return ResponseEntity.ok(bookings);
     }
     @GetMapping("/consumer")
     public ResponseEntity<Page<Booking>> getBookings(@RequestParam(defaultValue = "1") @Min(1) Integer page, @RequestParam(defaultValue = "10") @Min(1) @Max(100) Integer size){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        Optional<User> user = userService.getUserByUsername(username);
-        Page<Booking> bookings = bookingService.getBookingsForConsumer(page,size,user.get());
+        User user = userService.getUserByUsername(username);
+        Page<Booking> bookings = bookingService.getBookingsForConsumer(page,size,user);
         return ResponseEntity.ok(bookings);
     }
     @GetMapping("/{id}")
