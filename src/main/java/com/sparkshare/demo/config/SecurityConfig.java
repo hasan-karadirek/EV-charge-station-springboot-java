@@ -32,7 +32,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())  // Disable CSRF since we use JWT
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()  // Allow access to /auth routes
+                .requestMatchers("/api/auth/**").permitAll() // Allow access to /auth 
+                .requestMatchers("/api/station/all").permitAll() 
                 .anyRequest().authenticated()  // Protect all other endpoints
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Stateless session
