@@ -3,7 +3,9 @@ package com.sparkshare.demo.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -49,5 +51,17 @@ public class BookingService {
             throw new EntityNotFoundException("There is no such a Booking with this id: " + id);
         }
         return booking;
+    }
+    public Page<Booking> getBookingsForConsumer(Integer page, Integer size, User user){
+        Integer pageFromZero = page -1;
+        Pageable pageable = PageRequest.of(pageFromZero,size);
+        Page<Booking> bookings = bookingRepository.findAllByBookingUserId(user.getId(),pageable);
+        return bookings;
+    }
+    public Page<Booking> getBookingsForStation(Integer page, Integer size,User user){
+        Integer pageFromZero = page -1;
+        Pageable pageable = PageRequest.of(pageFromZero,size);
+        Page<Booking> bookings = bookingRepository.findAllByStationUserId(user.getId(),pageable);
+        return bookings;
     }
 }
