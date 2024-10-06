@@ -1,6 +1,5 @@
 package com.sparkshare.demo.controller;
 
-import com.sparkshare.demo.exception.ApiException;
 import com.sparkshare.demo.model.User;
 import com.sparkshare.demo.service.UserService;
 
