@@ -9,6 +9,8 @@ import com.sparkshare.demo.model.User;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Point;
 import com.sparkshare.demo.dto.CreateStationRequest;
+import com.sparkshare.demo.exception.ApiException;
+
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -37,8 +39,12 @@ public class EvStationService  {
 
         return evStationRepository.save(station);
     }
-    public Optional<EvStation> getStationById(Long id){
-        return evStationRepository.findById(id);
+    public EvStation getStationById(Long id){
+        Optional<EvStation> station = evStationRepository.findById(id);
+        if (station.isEmpty()){
+            throw new ApiException("There is no such a station associated with this id: " + id,404);
+        }
+        return station.get();
     }
     public Page<EvStation> getAllStations(double latitude, double longitude, double radius, Integer page, Integer size){
         Integer pageFromZero = page -1;

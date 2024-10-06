@@ -4,6 +4,7 @@ import com.sparkshare.demo.model.EvStation;
 import com.sparkshare.demo.model.User;
 import com.sparkshare.demo.service.EvStationService;
 import com.sparkshare.demo.service.UserService;
+import com.sparkshare.demo.dto.CreateStationRequest;
 
 import org.springframework.data.domain.Page;
 
@@ -12,8 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.sparkshare.demo.dto.CreateStationRequest;
-import java.util.Optional;
+
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
 
@@ -34,16 +35,14 @@ public class EvStationController {
     public ResponseEntity<EvStation> createEvStation(@RequestBody CreateStationRequest request){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        Optional<User> user = userService.getUserByUsername(username);
-        EvStation savedStation = evStationService.createStation(request,user.get());
+        User user = userService.getUserByUsername(username);
+        EvStation savedStation = evStationService.createStation(request,user);
         return ResponseEntity.ok(savedStation);
 
     }
     @GetMapping("/{id}")
     public ResponseEntity<EvStation> getStationById(@PathVariable Long id){
-        Optional<EvStation> station = evStationService.getStationById(id);
-        return station.map(ResponseEntity::ok)
-                      .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(evStationService.getStationById(id));
     }
     @GetMapping("/all")
     public ResponseEntity<Page<EvStation>> getAllStations(
