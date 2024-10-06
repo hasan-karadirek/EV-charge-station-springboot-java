@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 import com.sparkshare.demo.dto.CreateBookingRequest;
+import com.sparkshare.demo.exception.ApiException;
 import com.sparkshare.demo.model.Booking;
 import com.sparkshare.demo.model.EvStation;
 import com.sparkshare.demo.model.User;
@@ -30,11 +31,11 @@ public class BookingService {
     public Booking createBooking(CreateBookingRequest bookingRequest, User user) throws EntityNotFoundException{
         List<Booking> overlappingBookings = bookingRepository.findOverlappingBookings(bookingRequest.getStation_id(), bookingRequest.getCheckin(), bookingRequest.getCheckout());
         if (overlappingBookings.size()>0){
-            throw new RuntimeException("Station is not available!");
+            throw new ApiException("Station is not available for desired time.", 400);
         }
         Optional<EvStation> station = stationRepository.findById(bookingRequest.getStation_id());
         if (station.isEmpty()) {
-             throw new EntityNotFoundException("There is no such a station with this id: " + bookingRequest.getStation_id());
+            throw new ApiException("There is no such a station associated with this id:" + bookingRequest.getStation_id(), 404);
         }
         Booking newBooking = new Booking();
         newBooking.setCheckin(bookingRequest.getCheckin());
@@ -47,7 +48,7 @@ public class BookingService {
     public Booking getBookingById(Long id) throws EntityNotFoundException{
         Optional<Booking> booking = bookingRepository.findById(id);
         if (booking.isEmpty()){
-            throw new EntityNotFoundException("There is no such a Booking with this id: " + id);
+            throw new ApiException("There is no such a booking associated with this id:" + id, 404);
         }
         return booking.get();
     }

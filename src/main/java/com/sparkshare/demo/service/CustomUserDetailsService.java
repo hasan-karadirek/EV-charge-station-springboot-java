@@ -1,5 +1,6 @@
 package com.sparkshare.demo.service;
 
+import com.sparkshare.demo.exception.ApiException;
 import com.sparkshare.demo.model.User;
 import com.sparkshare.demo.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
+            throw new ApiException("User not found with username: " + username,404);
         }
 
         return org.springframework.security.core.userdetails.User

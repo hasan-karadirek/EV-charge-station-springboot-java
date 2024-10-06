@@ -43,9 +43,7 @@ public class EvStationController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<EvStation> getStationById(@PathVariable Long id){
-        EvStation station = evStationService.getStationById(id);
-        
-        return ResponseEntity.ok(station);
+        return ResponseEntity.ok(evStationService.getStationById(id));
     }
     @GetMapping("/all")
     public ResponseEntity<Page<EvStation>> getAllStations(

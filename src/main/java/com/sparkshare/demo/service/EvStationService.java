@@ -42,7 +42,7 @@ public class EvStationService  {
     public EvStation getStationById(Long id){
         Optional<EvStation> station = evStationRepository.findById(id);
         if (station.isEmpty()){
-            throw new ApiException("not found",404);
+            throw new ApiException("There is no such a station associated with this id: " + id,404);
         }
         return station.get();
     }
