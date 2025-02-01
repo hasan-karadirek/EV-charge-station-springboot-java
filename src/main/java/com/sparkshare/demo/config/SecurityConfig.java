@@ -1,7 +1,7 @@
 package com.sparkshare.demo.config;
 
-import com.sparkshare.demo.security.JwtAuthenticationFilter;
-import com.sparkshare.demo.service.CustomUserDetailsService;
+import com.sparkshare.demo.user.security.JwtAuthenticationFilter;
+import com.sparkshare.demo.user.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
